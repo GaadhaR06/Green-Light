@@ -1,0 +1,41 @@
+<DOCTYPE html>
+    <html lang="eng">
+    <head>
+      <meta charset="UTF-8">
+      <title>Green Light - Questions</title>
+      <link rel="stylesheet" href="F:\projects\GREEN LIGHT\GreenLight-QuestionPage\questiontemplate.css">
+      <link href='https://fonts.googleapis.com/css?family=Inter|Impact|Poppins' rel='stylesheet'>
+    </head>
+    <body>
+        <nav>
+            <img id="logo"
+                src="F:\projects\GREEN LIGHT\GreenLight-HOME\Logo.jpg" alt="Logo">
+            <ul>
+              <li><a href="file:///F:/projects/GREEN%20LIGHT/GreenLight-HOME/greenlight.html#">HOME</a></li>
+              <li><a href="#">ABOUT US</a></li>
+              <li><a href="#">CONTACT US</a></li>
+            </ul>
+          </nav>
+        <br><br><br><br>
+            <p id="questn">TELL US ABOUT A DAY IN YOUR LIFE WITHOUT YOUR FAVOURITE GAME?</p>
+            <textarea name="textarea" placeholder="Write your answer here" id="ansInput" rows="15"></textarea>
+            <button type="button" onclick="prev()" class="button prevq">Back</button>
+            <button type="button" onclick="getInputValue(); next();" class="button nextq">Next</button>
+            
+            <script>
+              function getInputValue(){
+                  // Selecting the input element and get its value 
+                  var inputVal = document.getElementById("ansInput").value;
+              }
+              function prev(){
+                window.location.href = "file:///F:/projects/GREEN%20LIGHT/Questions/question19.html#";
+               }
+              function next(){
+                   window.location.href = "file:///F:/projects/GREEN%20LIGHT/Questions/question19b.html#";
+              }
+                  </script>
+        
+            <img id = "blob2"
+              src = "F:\projects\GREEN LIGHT\GreenLight-HOME\blob-left-1.jpg">
+    </body>
+    </html>

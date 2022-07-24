@@ -1,0 +1,87 @@
+<DOCTYPE html>
+    <html lang="eng">
+    <head>
+      <meta charset="UTF-8">
+      <title>Green Light - Questions</title>
+      <link rel="stylesheet" href=".\static\css\questiontemplate.css">
+      <link href='https://fonts.googleapis.com/css?family=Inter|Impact|Poppins' rel='stylesheet'>
+    </head>
+    <body>
+        <nav>
+            <img id="logo"
+                src="F:\projects\GREEN LIGHT\GreenLight-HOME\Logo.jpg" alt="Logo">
+            <ul>
+              <li><a href="file:///F:/projects/GREEN%20LIGHT/GreenLight-HOME/greenlight.html#">HOME</a></li>
+              <li><a href="#">ABOUT US</a></li>
+              <li><a href="#">CONTACT US</a></li>
+            </ul>
+          </nav>
+        <br><br><br><br>
+            <!-- initial: keep q1 as visible, click on next button will only make the current ques hidden and set the next ques visible -->
+            <!-- dive each ques a diffrent but similar looking id in the order of its access -->
+
+            <form method="post">
+            <div class='visible' id="questn-1">           
+            <p>YOUR QUESTION HERE</p>
+            <textarea name="q1" value="{{ request.form['q1'] }}" placeholder="Write your answer here" id="ansInput" rows="15"></textarea>
+            </div>
+
+            <div class='hidden' id="questn-2">
+            <p>YOUR QUESTION HERE</p>
+            <!-- <-- to avoid override use difffrent  name  --> -->
+            <textarea name="q2" value="{{ request.form['q2'] }}" placeholder=" your answer here" id="ansInput" rows="15"></textarea>
+            </div>
+
+            <!-- we added new button submit which has to be disabled until last ques of each section and enable at last ques -->
+            <!-- on click of submit, all the answers get posted to python server together -->
+            <button type="button" onclick="prev()" class="button prevq">Back</button>
+            <button type="button" onclick=" next();" class="button nextq">Next</button>
+            <!-- <button type="submit" onclick=" next();" class="button nextq">Submit</button> -->
+            </form>
+            
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+            
+            <script>
+              var v=0;
+              function getInputValue(){
+                  // Selecting the input element and get its value 
+                  var inputVal = document.getElementById("ansInput").value;
+                  s = JSON.stringify(inputVal);
+                fetch ('/test',{method : 'POST',headers: {'Content-Type': 'application/json' },body:{s:s}}).then(console.log(response.json))
+
+                //   $.ajax({
+                //     url:"/test",
+                //     type:"POST",
+                //     contentType: "application/json",
+                //     data: JSON.stringify(s)});
+              }
+
+
+              function prev(){
+                // <div class="alert">
+                //   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                //     Your progress has not been saved. Are you sure you want to go back?
+                // </div>
+              //   window.location.href = "file:///F:/projects/GREEN%20LIGHT/GreenLight-HOME/greenlight.html#";
+               }
+
+            //    create a global variable "questnno" that will maintain the value for next question to be loaded. ie -1,-2,-3 etc
+            // we can add conditional statements to make necessary chnage in ctrl flow
+
+              function next(){
+                //getInputValue();
+                v=v+1;
+                if(v==3){return;}
+                var element = document.getElementById("questn-"+v);
+                element.classList.add("hidden");
+                element.classList.remove("visible");
+
+
+            }
+              
+                  </script>
+        
+            <img id = "blob2"
+              src = "F:\projects\GREEN LIGHT\GreenLight-HOME\blob-left-1.jpg">
+    </body>
+    </html>

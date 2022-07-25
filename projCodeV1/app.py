@@ -453,6 +453,27 @@ def testfn18d():
         health['p'] += 1
         print(health)
         return 'Sucesss', 200
+   
+@app.route('/result', methods=['GET', 'POST'])
+def testfnr():
+    # GET request
+    if request.method == 'GET':
+        finalscore = 11
+        for ind in health.values():
+            if(finalscore > ind):
+                finalscore = ind
+
+        if(finalscore <0):
+            finalscore=finalscore*-5
+        elif (finalscore == 0):
+            finalscore = 5
+        else:
+            finalscore=finalscore+5 
+
+#make sure u change this 11
+        finalscore=11       
+        return render_template('resultspage.html', embed = "HEALTH SCORE ="+ f"{finalscore}")
+    
         
 if __name__ == "__main__":
     app.run(debug =True)

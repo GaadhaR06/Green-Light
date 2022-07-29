@@ -18,6 +18,7 @@
           </ul>
         </nav>
       <br><br><br><br>
+   
           <p id="questn">HOW DO YOU DESCRIBE YOUR NORMAL DAY?</p>
           <textarea name="textarea" placeholder="Write your answer here" id="ansInput" rows="15"></textarea>
           <button type="button" onclick="prev()" class="button prevq">Back</button>

@@ -1,0 +1,62 @@
+<DOCTYPE html>
+    <html lang="eng">
+    <head>
+      <meta charset="UTF-8">
+      <title>Green Light - Questions</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/questiontemplate.css') }}">
+      <link href='https://fonts.googleapis.com/css?family=Inter|Impact|Poppins' rel='stylesheet'>
+    </head>
+    <body>
+        <nav>
+            <img id="logo"
+                src=".\static\Logo.jpg" alt="Logo">
+            <ul>
+              <li><a href="http://127.0.0.1:5000/question1">HOME</a></li>
+              <li><a href="http://127.0.0.1:5000/aboutus">ABOUT US</a></li>
+              <li><a href="#">CONTACT US</a></li>
+            </ul>
+          </nav>
+        <br><br><br><br>
+            <p id="questn">DOES IT MAKE YOU FEEL STRESSED?</p>
+            <!-- <input type="radio" id="myAppetite" name="poorAppetite">Poor Appetite -->
+            <input type="radio" id="myStress" name="stress" value="Very Often"><p class = "radiotext">Very Often</p>
+            <input type="radio" id="myStress" name="stress" value="Sometimes"><p class = "radiotext">Sometimes</p>
+            <input type="radio" id="myStress" name="stress" value="Very Rarely"><p class = "radiotext">Very Rarely</p>
+
+            <!-- <textarea name="textarea" placeholder="Write your answer here" id="ansInput" rows="15"></textarea> -->
+            <button type="button" onclick="prev()" class="button prevq" style="margin-top: 275px;">Back</button>
+            <button type="button" onclick="getInputValue(); next();" class="button nextq">Next</button>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+            <script>
+              function getInputValue(){
+                  // Selecting the input element and get its value 
+                  var inputVal = document.getElementsByName("stress");
+                  for(i=0; i<inputVal.length; i++)
+                  {
+                    if(inputVal[i].checked)
+                        var strss = inputVal[i].value;
+                  }
+                  s = JSON.stringify(strss);
+                  $.ajax({
+                  url:"/question14",
+                  type:"POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(s)})
+              }
+              function prev(){
+                // <div class="alert">
+                //   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                //     Your progress has not been saved. Are you sure you want to go back?
+                // </div>
+                window.location.href = "http://127.0.0.1:5000/question13";
+               }
+              function next(){
+                  window.location.href = "http://127.0.0.1:5000/question15";
+              }
+                  </script>
+        
+            <img id = "blob2"
+              src = "./static/blob-left-1.jpg">
+    </body>
+    </html>

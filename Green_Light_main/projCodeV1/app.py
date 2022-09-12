@@ -1,9 +1,10 @@
 from flask import Flask, json, request, render_template
+from time import sleep
 from Analyzer import Analyse
+import math
 
 app = Flask(__name__)
 @app.route('/')  
-#not important for now
 def home_page():
     return render_template('HOME.html')
 
@@ -26,7 +27,6 @@ def testfn1():
         health["PTSD"] += Analyse(answer,"ptsd.txt")
         health['p'] += 1
         print(health) 
-        # text = json.loads(answer) #this converts the json output to a python dictionary
         return 'Sucesss', 200
 
 @app.route('/question2', methods=['GET', 'POST'])
@@ -51,9 +51,6 @@ def testfn2a():
         health['a'] += 1
         health["PTSD"] += Analyse(answer,"ptsd.txt")
         health['p'] += 1
-        #text = json.loads(answer) #this converts the json output to a python dictionary
-        # print(text)
-        # print(type(text))
         print(health)
         return 'Sucesss', 200
 
@@ -87,11 +84,11 @@ def testfn3():
         answer = request.get_json()
         print(answer)  # parse as JSON
         if(answer == "Poor" or answer == "Over-Eating"):
-            health["depression"] += -0.1
+            health["depression"] += -1
             health['d'] += 1
-            health["anxiety"] += -0.1
+            health["anxiety"] += -1
             health['a'] += 1
-            health["PTSD"] += -0.1
+            health["PTSD"] += -1
             health['p'] += 1
         elif(answer == "None"):
             health["depression"] += 0.7
@@ -152,11 +149,11 @@ def testfn6():
         answer = request.get_json()
         print(answer)  # parse as JSON
         if(answer == "Poor"):
-            health["depression"] += -0.1
+            health["depression"] += -1
             health['d'] += 1
-            health["anxiety"] += -0.1
+            health["anxiety"] += -1
             health['a'] += 1
-            health["PTSD"] += -0.1
+            health["PTSD"] += -1
             health['p'] += 1
         elif(answer == "Moderate"):
             health["depression"] += 0.1
@@ -216,12 +213,12 @@ def testfn9():
         answer = request.get_json()
         print(answer)  # parse as JSON
         if(answer == "Not at all interested"):
-            health["depression"] += -0.5
+            health["depression"] += -1
         elif(answer == "Moderately interested"):
             health["depression"] += 0
             health['d'] += 1
         elif(answer == "Interested"):
-            health["depression"] += 0.3
+            health["depression"] += 0.5
             health['d'] += 1
         elif(answer == "Really interested"):
             health["depression"] += 0.8
@@ -284,7 +281,7 @@ def testfn13():
         answer = request.get_json()
         print(answer)  # parse as JSON
         if(answer == "Very Often"):
-            health["anxiety"] += -0.5
+            health["anxiety"] += -1
             health['a'] += 1
         elif(answer == "Sometimes"):
             health["anxiety"] += 0.1
@@ -306,7 +303,7 @@ def testfn14():
         answer = request.get_json()
         print(answer)  # parse as JSON
         if(answer == "Very Often"):
-            health["anxiety"] += -0.8
+            health["anxiety"] += -1
             health['a'] += 1
         elif(answer == "Sometimes"):
             health["anxiety"] += 0.1
@@ -343,7 +340,7 @@ def testfn16():
         answer = request.get_json()
         print(answer)  # parse as JSON
         if(answer == "Very Often"):
-            health["anxiety"] += -0.8
+            health["anxiety"] += -1
             health['a'] += 1
         elif(answer == "Sometimes"):
             health["anxiety"] += 0.1
@@ -371,7 +368,7 @@ def testfn18():
             health["PTSD"] += 0
             health['p'] += 1
         elif(answer == "No"):
-            health["PTSD"] += 1
+            health["PTSD"] = 0
             health['p'] += 1
         print(health)
         return 'Sucesss', 200
@@ -453,27 +450,39 @@ def testfn18d():
         health['p'] += 1
         print(health)
         return 'Sucesss', 200
-   
-@app.route('/result', methods=['GET', 'POST'])
+
+@app.route('/resultspage', methods=['GET', 'POST'])
 def testfnr():
     # GET request
+    sleep(10)
     if request.method == 'GET':
-        finalscore = 11
+        finalscore = 99
+        keys={}
+        health["depression"] = health["depression"]/health["d"]
+        health["anxiety"] = health["anxiety"]/health["a"]
+        health["PTSD"] = health["PTSD"]/health["p"]
+        del health['p']
+        del health['d']
+        del health['a']
         for ind in health.values():
             if(finalscore > ind):
                 finalscore = ind
-
+        fs= math.modf(finalscore)
         if(finalscore <0):
-            finalscore=finalscore*-5
+            finalscore= 5 - fs[0]*-5
         elif (finalscore == 0):
             finalscore = 5
         else:
-            finalscore=finalscore+5 
+            finalscore=5 + fs[0]*5 
+        
+        if( 5 > finalscore):
+            keys = [k for k, v in health.items() if v < -0.1] 
 
-#make sure u change this 11
-        finalscore=11       
-        return render_template('resultspage.html', embed = "HEALTH SCORE ="+ f"{finalscore}")
-    
+    if keys:  
+        return render_template('resultspage.html', embeds = "HEALTH SCORE ="+ f"{round(finalscore)}", embed = "YOU MAY HAVE: " + f"{keys}")
+    else:
+        return render_template('resultspage.html', embeds = "HEALTH SCORE ="+ f"{round(finalscore)}", embed = "YOU ARE ALRIGHT")
+
         
 if __name__ == "__main__":
     app.run(debug =True)

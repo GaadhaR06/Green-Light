@@ -1,0 +1,53 @@
+<DOCTYPE html>
+    <html lang="eng">
+    <head>
+      <meta charset="UTF-8">
+      <title>Green Light - Questions</title>
+      <link rel="stylesheet" href="F:\projects\GREEN LIGHT\GreenLight-QuestionPage\questiontemplate.css">
+      <link href='https://fonts.googleapis.com/css?family=Inter|Impact|Poppins' rel='stylesheet'>
+    </head>
+    <body>
+        <nav>
+            <img id="logo"
+                src=".\static\Logo.jpg" alt="Logo">
+            <ul>
+              <li><a href="http://127.0.0.1:5000/question1">HOME</a></li>
+              <li><a href="#">ABOUT US</a></li>
+              <li><a href="#">CONTACT US</a></li>
+            </ul>
+          </nav>
+        <br><br><br><br>
+            <p id="questn">HOW LONG DO YOU SPEND IN FRONT OF ELECTRONIC DEVICES TO PLAY GAMES PER DAY?</p>
+            <input type="number" id="sleepHours" min="0" max="24" required>
+            <!-- <textarea name="textarea" placeholder="Write your answer here" id="ansInput" rows="15"></textarea>-->
+            <button type="button" onclick="prev()" class="button prevq" style="margin-top: 250px;">Back</button> 
+            <button type="button" onclick="getInputValue(); next();" class="button nextq">Next</button>
+             
+            <script>
+              function getInputValue(){
+                  var x = document.getElementById("sleepHours").value;
+                  if(x<3){
+                    // window.location.href = "http://127.0.0.1:5000question2a.html#";
+                    // go to results page
+                  }
+                  else if(x>5){
+                    window.location.href = "http://127.0.0.1:5000question19a.html#";
+                  }
+                  
+              }
+              function prev(){
+                 window.location.href = "http://127.0.0.1:5000question18.html#";
+               }
+              function next(){
+                if(x<5){
+                    // go to results page
+                }
+              }
+              
+                  </script>
+        
+            <img id = "blob2"
+              src = "./static/blob-left-1.jpg"
+              style= "margin-top: -240px;">
+    </body>
+    </html>
